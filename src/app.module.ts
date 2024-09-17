@@ -1,0 +1,34 @@
+import { Module } from '@nestjs/common';
+import { LinksModule } from './links/links.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Link } from './links/entities/link.entity';
+import { ConfigModule } from '@nestjs/config';
+import { TelegrafModule } from 'nestjs-telegraf';
+import LocalSession from 'telegraf-session-local';
+
+
+const sessions = new LocalSession({
+  
+})
+
+@Module({
+  imports: [
+    TelegrafModule.forRoot({
+      middlewares: [sessions.middleware()],
+      token: process.env.BOT_API_TOKEN
+    }),
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: [Link],
+      synchronize: true,
+    }),
+    LinksModule,
+  ],
+})
+export class AppModule { }
