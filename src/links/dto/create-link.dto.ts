@@ -1,11 +1,11 @@
-import { IsString, IsUrl } from "@nestjs/class-validator";
+import { IsString, IsUrl, IsNotEmpty } from "@nestjs/class-validator";
 
 export class CreateLinkDto {
-    id: number;
-
+    @IsNotEmpty()
     @IsString()
     name: string;
-
+    
+    @IsNotEmpty()
     @IsUrl()
     url: string;
 }

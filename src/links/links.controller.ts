@@ -1,16 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { LinksService } from './links.service';
 import { CreateLinkDto } from './dto/create-link.dto';
-import { UpdateLinkDto } from './dto/update-link.dto';
 import { Link } from './entities/link.entity';
-import { InjectBot } from 'nestjs-telegraf';
-import { Context, Telegraf } from 'telegraf';
 
 @Controller('links')
 export class LinksController {
   constructor(
-    @InjectBot()
-    private readonly bot: Telegraf<Context>,
     private readonly linksService: LinksService
   ) { }
 
