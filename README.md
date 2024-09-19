@@ -16,20 +16,24 @@
 
 # Installation
 
-```$ npm install ```
+```bash
+$ npm install
 
 # Running the app
 
-### development
-```$ npm run start```
+# development
+```$ npm run start
 
-### watch mode
-```$ npm run start:dev```
+# watch mode
+$ npm run start:dev
+```
 
-# env
+## Add .env file (example)
+```dotenv
 BOT_API_TOKEN=
 DB_HOST=     
 DB_PORT=
 DB_USER=         
 DB_PASSWORD=    
-DB_NAME=      
+DB_NAME=   
+```   
