@@ -92,7 +92,6 @@ export class LinksUpdate {
             if (link.id) { 
                 await this.linksService.remove(link.id);
                 await ctx.reply(`Ваша ссылка удалена!`) 
-                await ctx.reply(`${link.url}`) 
                 return 
             }
             else {
@@ -133,7 +132,7 @@ export class LinksUpdate {
     @Action('get')
     async findOne(ctx: Context) /* : Promise<Link> */ {
         // return this.linksService.findOne(+id);
-        await ctx.reply(`Введите уникальный uuid ссылки`, actionButtons())
+        await ctx.reply(`Введите уникальный uuid ссылки`)
         ctx.session.type = 'find'
     }
 
@@ -141,7 +140,7 @@ export class LinksUpdate {
     // пользователь может удалить ранее созданную им ссылку из бота  
     @Action('delete')
     async remove(ctx: Context/* @Param('id') id: string */) {
-        await ctx.reply(`Введите уникальный uuid ссылки`, actionButtons())
+        await ctx.reply(`Введите уникальный uuid ссылки`)
         ctx.session.type = 'remove'
     }
 }
