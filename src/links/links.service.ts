@@ -25,6 +25,11 @@ export class LinksService {
     return this.linksRepository.findOneBy({ id });
   }
 
+  findOneByUUID(uuid: string): Promise<Link> {
+    return this.linksRepository.findOneBy({ uuid });
+  }
+
+
   async remove(id: number): Promise<void> {
     await this.linksRepository.delete(id);
   }

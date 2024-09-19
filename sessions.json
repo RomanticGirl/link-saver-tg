@@ -4,9 +4,10 @@
       "id": "1886374476:1886374476",
       "data": {
         "__scenes": {},
-        "type": "saveURL",
-        "name": "123",
-        "url": "asfasf"
+        "type": "find",
+        "name": "Первая",
+        "url": "https://stackoverflow.com/questions/1303872/trying-to-validate-url-using-javascript",
+        "uuid": "0a8e836b-aa93-49a0-967f-f4c29a26e8d5"
       }
     },
     {
@@ -17,6 +18,12 @@
     },
     {
       "id": "857623663:857623663",
+      "data": {
+        "__scenes": {}
+      }
+    },
+    {
+      "id": "175975541:175975541",
       "data": {
         "__scenes": {}
       }

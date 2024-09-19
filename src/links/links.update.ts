@@ -4,6 +4,17 @@ import { Markup, Telegraf } from 'telegraf';
 import { actionButtons, saveButtons } from './links.buttons';
 import { Context } from './context.interface';
 import { CreateLinkDto } from './dto/create-link.dto';
+import { v4 as uuidv4 } from 'uuid';
+
+function isValidURL(url: string) {
+    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+    if (RegExp.test(url)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 @Update()
@@ -46,15 +57,34 @@ export class LinksUpdate {
             return;
         }
         if (ctx.session.type === 'saveURL') {
-
-            ctx.session.url = message
+            if (isValidURL(message)) {
+                ctx.session.url = message
+            } else {
+                await ctx.reply(`Неверный формат URL, введите еще раз`)
+                await this.createLink(ctx);
+                return
+            }
             const newLink: CreateLinkDto = {
                 name: ctx.session.name,
-                url: ctx.session.url
+                url: ctx.session.url,
+                uuid: uuidv4()
             }
             const link = await this.linksService.create(newLink);
-            await ctx.reply(`Создана ссылка с уникальным ID ${link.id}`, actionButtons())
+            await ctx.reply(`Создана ссылка с уникальным uuid ${link.uuid}`, actionButtons())
             return;
+        }
+        if (ctx.session.type === 'find') {
+            ctx.session.uuid = message
+            const link = await this.linksService.findOneByUUID(message);
+            if (link.id) { 
+                await ctx.reply(`Ваша ссылка!`) 
+                await ctx.reply(`${link.url}`) 
+                return 
+            }
+            else {
+                await ctx.reply(`Такой ссылки не существует`)
+            }
+            return
         }
     }
 
@@ -62,7 +92,7 @@ export class LinksUpdate {
     // Список сохраненных ссылок
     // бот выводит список ссылок и их уникальных кодов (пагинация не требуется, но будет плюсом) 
     @Action('list')
-    async listLinks(ctx: Context): Promise<void> {
+    async listLinks(ctx: Context) {
         const btns = [];
         const list = await this.linksService.findAll();
         await ctx.reply(`Список ссылок: \n\n 
@@ -76,6 +106,7 @@ export class LinksUpdate {
                 columns: 1
             }
         ));
+        return
     }
 
     // Получение ссылки   
@@ -87,7 +118,8 @@ export class LinksUpdate {
     @Action('get')
     async findOne(ctx: Context) /* : Promise<Link> */ {
         // return this.linksService.findOne(+id);
-        await ctx.replyWithSticker('CAACAgIAAxkBAAEIlJZm6sqiKRMHVVu-NdG5yLWvJ2oEqgACEwADsjaQGYjqOlghB5NpNgQ')
+        await ctx.reply(`Введите уникальный uuid ссылки`, actionButtons())
+        ctx.session.type = 'find'
     }
 
     // Удаление ссылки  

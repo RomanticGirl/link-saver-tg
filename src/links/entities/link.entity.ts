@@ -6,6 +6,9 @@ export class Link {
     id: number;
 
     @Column()
+    uuid: string;
+
+    @Column()
     name: string;
 
     @Column()

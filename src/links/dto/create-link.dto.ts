@@ -6,6 +6,9 @@ export class CreateLinkDto {
     name: string;
     
     @IsNotEmpty()
+    uuid: string;
+
+    @IsNotEmpty()
     @IsUrl()
     url: string;
 }

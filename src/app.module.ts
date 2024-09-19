@@ -11,7 +11,6 @@ const sessions = new LocalSession({
   
 })
 
-console.log(process.env.BOT_API_TOKEN)
 @Module({
   imports: [
     ConfigModule.forRoot(),

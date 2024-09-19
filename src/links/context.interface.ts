@@ -7,5 +7,6 @@ export interface Context extends ContextTelegraf {
         type?: 'saveName' | 'saveURL' | 'find' | 'remove'
         name?: string,
         url?: string,
+        uuid?: string
     }
 }
