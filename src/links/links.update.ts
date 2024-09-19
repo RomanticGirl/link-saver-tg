@@ -86,6 +86,21 @@ export class LinksUpdate {
             }
             return
         }
+        if (ctx.session.type === 'remove') {
+            ctx.session.uuid = message
+            const link = await this.linksService.findOneByUUID(message);
+            if (link.id) { 
+                await this.linksService.remove(link.id);
+                await ctx.reply(`Ваша ссылка удалена!`) 
+                await ctx.reply(`${link.url}`) 
+                return 
+            }
+            else {
+                await ctx.reply(`Такой ссылки не существует`)
+            }
+            return
+        }
+
     }
 
 
@@ -126,7 +141,7 @@ export class LinksUpdate {
     // пользователь может удалить ранее созданную им ссылку из бота  
     @Action('delete')
     async remove(ctx: Context/* @Param('id') id: string */) {
-        // return this.linksService.remove(+id);
-        await ctx.replyWithSticker('CAACAgIAAxkBAAEIlJZm6sqiKRMHVVu-NdG5yLWvJ2oEqgACEwADsjaQGYjqOlghB5NpNgQ')
+        await ctx.reply(`Введите уникальный uuid ссылки`, actionButtons())
+        ctx.session.type = 'remove'
     }
 }
