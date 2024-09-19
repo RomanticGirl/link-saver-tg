@@ -112,7 +112,7 @@ export class LinksUpdate {
         await ctx.reply(`Список ссылок: \n\n 
             ${list.length > 0 ? list.map(link => {
             link.name + '\n\n';
-            btns.push(Markup.button.callback(link.name, link.id.toString()))
+            btns.push(Markup.button.callback(link.name + " / " + link.url, link.id.toString()))
         }
         ).join('') : 'Список пуст'}`, Markup.inlineKeyboard(
             btns,
