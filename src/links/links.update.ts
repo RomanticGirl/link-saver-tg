@@ -76,7 +76,7 @@ export class LinksUpdate {
         if (ctx.session.type === 'find') {
             ctx.session.uuid = message
             const link = await this.linksService.findOneByUUID(message);
-            if (link.id) { 
+            if (link && link.id) { 
                 await ctx.reply(`Ваша ссылка!`) 
                 await ctx.reply(`${link.url}`) 
                 return 
